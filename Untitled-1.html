@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>R2-Débrouille</title>
+  <style>
+    body {
+      background-color: #0a0e17;
+      color: #e8edf5;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background-color: #0f1624;
+      padding: 15px 30px;
+      border-bottom: 2px solid #1a3a6b;
+    }
+
+    nav a {
+      color: #2a6fd6;
+      text-decoration: none;
+      margin-right: 20px;
+      font-size: 1rem;
+    }
+
+    nav a:hover { color: white; }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #2a6fd6;
+      margin: 40px 0 10px 0;
+    }
+
+    h2 {
+      color: #2a6fd6;
+      border-bottom: 1px solid #1a3a6b;
+      padding-bottom: 8px;
+    }
+
+    section {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    p { color: #b0bcd0; line-height: 1.7; }
+
+    .membre {
+      background-color: #0f1624;
+      border: 1px solid #1a3a6b;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .membre p { margin: 3px 0; }
+
+    .mission {
+      background-color: #0f1624;
+      border-left: 4px solid #2a6fd6;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 0 5px 5px 0;
+    }
+
+    pre {
+      background-color: #060a12;
+      border: 1px solid #1a3a6b;
+      color: #2a6fd6;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+    }
+
+    footer {
+      text-align: center;
+      color: #7a8fad;
+      padding: 20px;
+      border-top: 1px solid #1a3a6b;
+      margin-top: 60px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a Equipe</a>
+    <a Robot</a>
+    <a Missions</a>
+    <a Code</a>
+    <a Videos</a>
+  </nav>
+
+  <h1>R2-Débrouille</h1>
+  <p style="text-align:center; color:#7a8fad;">SAE 2.02 - Robot LEGO EV3 - IUT Vélizy 2026</p>
+
+  <section id="equipe">
+    <h2>Notre équipe</h2>
+    <p>Nous sommes 4 étudiants en BUT GEII à l'IUT de Vélizy.</p>
+
+    <div class="membre">
+      <p><strong>Alexandre Gaudry</strong></p>
+      <p style="color:#2a6fd6;">Programmation code suivis de ligne</p>
+    </div>
+    <div class="membre">
+      <p><strong>Nathan Bernar</strong></p>
+      <p style="color:#2a6fd6;">Programmation code labyrinthe et site intenet</p>
+    </div>
+    <div class="membre">
+      <p><strong>Noé Le Gall</strong></p>
+      <p style="color:#2a6fd6;">Programmation code labyrinthe et site internet</p>
+    </div>
+    <div class="membre">
+      <p><strong>Zoé Lin</strong></p>
+      <p style="color:#2a6fd6;">Programmation code suivis de ligne</p>
+    </div>
+  </section>
+
+  <section id="robot">
+    <h2>Notre robot</h2>
+    <p>R2-Débrouille est un robot LEGO Mindstorms EV3. Il utilise plusieurs capteurs pour se déplacer seul dans un labyrinthe et suivre une piste.</p>
+    <p><strong>Capteurs :</strong> ultrason, couleur, gyroscope, contact</p>
+    <p><strong>Moteurs :</strong> 3 servomoteurs</p>
+    <p><strong>Langages :</strong> RobotC (code labyrinthe) et EV3 MicroPython (code suivis de ligne)</p>
+    <div style="display: flex; gap: 10px; justify-content: center">
+        <a href="https://github.com/No1002/robotlego/blob/1309ce2b9d556faf0dfce1facede8be509caaa14/image0.jpeg">
+            <img src="IMG_2935.jpeg" alt="description" width=200 height=auto>
+            <img src="IMG_2936.jpeg" alt="description" width=200 height=auto>
+            <img src="IMG_2937.jpeg" alt="description" width=200 height=auto>
+        </a>
+    </div>
+   
+  </section>
+
+  <section id="missions">
+    <h2>Les missions</h2>
+
+    <div class="mission">
+      <p><strong>Mission 1 : Sortir du labyrinthe</strong>
+      <p>Le robot doit partir d'un point de départ, traverser un labyrinthe composé de couloirs perpendiculaires, et s'arrêter sur la zone de sortie matérialisée par une couleur jaune au sol. Une fois arrivé, il effectue une rotation complète de 360° sur lui-même. Le labyrinthe n'est pas connu à l'avance : il peut contenir des impasses et des intersections. Chaque équipe est chronométrée, et le meilleur des 2 passages est retenu.</p>
+    </div>
+    <div class="mission">
+      <p><strong>Mission 2 : Échapper au piège</strong>
+      <p>En plus de sortir du labyrinthe, le robot doit détecter une balise rouge au sol qui fera office de "piège"; lorsqu'il la détecte, il recule, puis doit actionner le bouton situé sur la paroi de droite
+      permettant de désamorcer le piège. Le robot émet ensuite un son pour signaler que le piège est désactivé, puis continue jusqu'à la sortie.</p>
+    </div>
+    <div class="mission">
+      <p><strong>Mission 3 : Les tours de piste</strong>
+      <p>Le robot participe aux "24 heures de Vélizy". Il doit suivre une piste matérialisée par une ligne noire d'environ 2 cm de large sur fond blanc, parcourir 2 tours complets, puis s'arrêter en affichant le temps de parcours. Le chronomètre démarre au 1er passage sur la balise rouge (ligne de départ) et s'arrête au passage sur cette même balise à la fin du 2e tour.</p>
+    </div>
+    <div class="mission">
+      <p><strong>Mission 4 : L'obstacle</strong> </p>
+      <p>Lors d'un des tours de piste, un obstacle est placé au milieu de la ligne droite. Le robot doit le détecter, le contourner et retrouver la piste derrière lui. Au 2e passage sur la ligne de départ, le robot s'arrête 5 secondes (arrêt stand), fait demi-tour, effectue un second tour en sens inverse avec un nouvel évitement de l'obstacle, puis s'arrête définitivement.</p>
+    </div>
+  </section>
+
+  <section id="code">
+    <h2>Nos programmes</h2>
+    <p>Extrait de notre code sortie du labyrinthe en RobotC:</p>
+    <pre>
+ while (true) {
+        // Arrivée : balise jaune
+        if (SensorValue[colorSensor] == (int)colorYellow) {
+            // Tour complet sur place
+            nMotorEncoder[motorB] = 0;
+            motor[motorB] =  SPEED;
+            motor[motorC] = -SPEED;
+            while (nMotorEncoder[motorB] < TURN_DEG * 4) {}
+            motor[motorB] = 0;
+            motor[motorC] = 0;
+            break;
+}</pre>
+
+
+<section id="code">
+    <h2>Nos programmes</h2>
+    <p>Extrait de notre code suivis de piste en python :</p>
+    <pre>
+task main() {
+  while (true) {
+    if (SensorValue[ultrason] > 20) {
+      motor[motorB] = 50;
+      motor[motorC] = 50;
+    } else {
+      motor[motorB] = -30;
+      motor[motorC] = -30;
+      wait1Msec(400);
+      motor[motorB] = 50;
+      motor[motorC] = -50;
+      wait1Msec(600);
+    }
+  }
+}</pre>
+    <p style="color:#7a8fad; font-size:0.85rem;">Utilisation de l'IA : environ 30%. tout le code a été relu et compris par l'équipe.</p>
+    <p>Télécharger :
+      <a href="mission1.c" style="color:#2a6fd6;">Mission 1</a> —
+      <a href="mission2.c" style="color:#2a6fd6;">Mission 2</a> —
+      <a href="mission3.py" style="color:#2a6fd6;">Mission 3</a> —
+      <a href="mission4.py" style="color:#2a6fd6;">Mission 4</a>
+    </p>
+  </section>
+
+  <section id="videos">
+    <h2>Vidéos</h2>
+    <p style="color:#7a8fad">[ Vidéo labyrinthe à ajouter ]</p>
+ 
+    <p style="color:#7a8fad">[ Vidéo suivis lifne à ajouter ]</p>
+  </section>
+
+  <footer>
+    R2-Débrouille - SAE 2.02 - IUT de Vélizy 2026
+  </footer>
+
+</body>
+</html>
+
+
+<!-- easter egg -->
+<script>
+  document.querySelector('h1').addEventListener('click', function() {
+    this.style.color = 'red';
+  });
+</script>
