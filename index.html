@@ -181,20 +181,141 @@
     <h2>Nos programmes</h2>
     <p>Extrait de notre code suivis de piste en python :</p>
     <pre>
-task main() {
-  while (true) {
-    if (SensorValue[ultrason] > 20) {
-      motor[motorB] = 50;
-      motor[motorC] = 50;
-    } else {
-      motor[motorB] = -30;
-      motor[motorC] = -30;
-      wait1Msec(400);
-      motor[motorB] = 50;
-      motor[motorC] = -50;
-      wait1Msec(600);
+#pragma config(Sensor, S2, captcD, sensorEV3_Color, modeEV3Color_Reflected)  // capteur couleur droit (S2) en mode réfléchi
+#pragma config(Sensor, S3, captcG, sensorEV3_Color, modeEV3Color_Reflected)  // capteur couleur gauche (S3) en mode réfléchi
+#pragma config(Sensor, S4, ultra,  sensorEV3_Ultrasonic)                     // capteur ultrason (S4)
+
+#pragma config(Motor, motorA, scanner, tmotorEV3_Large, PIDControl, encoder)          // moteur A = rotation du scanner
+#pragma config(Motor, motorB, motD,    tmotorEV3_Large, PIDControl, driveRight, encoder) // moteur B = roue droite
+#pragma config(Motor, motorD, motG,    tmotorEV3_Large, PIDControl, driveLeft, encoder)  // moteur D = roue gauche
+
+#define DISTANCE_MUR 300  // seuil de détection d'un mur (en mm)
+#define VITESSE 30        // vitesse de base des moteurs
+
+void avancer()
+{
+    motor[motG] = VITESSE;
+    motor[motD] = VITESSE;
+}
+
+void stop_robot()
+{
+    motor[motG] = 0;
+    motor[motD] = 0;
+}
+
+void tourner_gauche()
+{
+    motor[motG] = -30;   // roue gauche en arrière
+    motor[motD] = 30;    // roue droite en avant → pivote à gauche
+    wait1Msec(650);      // durée calibrée pour ~90°
+    stop_robot();
+}
+
+void tourner_droite()
+{
+    motor[motG] = 30;
+    motor[motD] = -30;
+    wait1Msec(650);
+    stop_robot();
+}
+
+void reculer_60cm()
+{
+    motor[motG] = -30;
+    motor[motD] = -30;
+    wait1Msec(2500);  // durée calibrée pour ~60cm en arrière
+    stop_robot();
+}
+
+void tourner_360()
+{
+    motor[motG] = 30;
+    motor[motD] = -30;
+    wait1Msec(3250);  // durée calibrée pour un tour complet (célébration fin de parcours)
+    stop_robot();
+}
+
+int scan_gauche()
+{
+    motor[scanner] = 20;   // tourne le scanner vers la gauche
+    wait1Msec(550);
+    motor[scanner] = 0;
+    wait1Msec(200);        // stabilisation avant lecture
+
+    int d = SensorValue[ultra];  // mesure la distance à gauche
+
+    motor[scanner] = -20;  // remet le scanner en position centrale
+    wait1Msec(550);
+    motor[scanner] = 0;
+
+    return d;
+}
+
+int scan_droite()
+{
+    motor[scanner] = -20;  // tourne le scanner vers la droite
+    wait1Msec(550);
+    motor[scanner] = 0;
+    wait1Msec(200);
+
+    int d = SensorValue[ultra];
+
+    motor[scanner] = 20;   // remet en position centrale
+    wait1Msec(550);
+    motor[scanner] = 0;
+
+    return d;
+}
+
+task main()
+{
+    while(true)
+    {
+        int g = SensorValue[captcG];
+        int d = SensorValue[captcD];
+
+        if(g > 50 || d > 50)  // détection du jaune = arrivée
+        {
+            stop_robot();
+            tourner_360();     // animation de fin
+            stop_robot();
+
+            while(true) { wait1Msec(100); }  // bloque le robot définitivement
+        }
+
+        avancer();
+
+        if(SensorValue[ultra] < DISTANCE_MUR)  // mur détecté devant
+        {
+            stop_robot();
+            wait1Msec(200);
+
+            int gauche = scan_gauche();
+            int droite = scan_droite();
+
+            if(gauche < DISTANCE_MUR && droite < DISTANCE_MUR)  // impasse : mur des 3 côtés
+            {
+                reculer_60cm();
+
+                gauche = scan_gauche();  // re-scan après recul
+                droite = scan_droite();
+
+                if(gauche > DISTANCE_MUR)       tourner_gauche();
+                else if(droite > DISTANCE_MUR)  tourner_droite();
+                else                            { tourner_droite(); tourner_droite(); }  // demi-tour
+            }
+            else  // au moins un côté libre
+            {
+                if(gauche > DISTANCE_MUR)       tourner_gauche();
+                else if(droite > DISTANCE_MUR)  tourner_droite();
+                else                            reculer_60cm();
+            }
+        }
+
+        wait1Msec(20);  // petite pause
     }
-  }
+}
 }</pre>
     <p style="color:#7a8fad; font-size:0.85rem;">Utilisation de l'IA : environ 30%. tout le code a été relu et compris par l'équipe.</p>
     <p>Télécharger :
